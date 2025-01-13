@@ -14,3 +14,14 @@ if grep -q "Ubuntu" /etc/os-release; then
 	  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
 	  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 	sudo apt-get update
+
+	sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+	
+	output=$(docker run hello-world)
+	if [ $? -eq 0 ]; then 
+		echo "Installation completed."
+	else
+		echo "Error during installation: "
+		echo "$output" 
+	fi
+fi 
