@@ -1,5 +1,1 @@
 alias qwe='~/.start.sh'
-alias dotfiles='git --git-dir=${HOME}/dotfiles --work-tree=${HOME}'
-alias dotfiles='git --git-dir=${HOME}/dotfiles --work-tree=${HOME}'
-alias dotfiles='git --git-dir=${HOME}/dotfiles --work-tree=${HOME}'
-alias dotfiles='git --git-dir=${HOME}/dotfiles --work-tree=${HOME}'
