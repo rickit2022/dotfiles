@@ -7,10 +7,11 @@ if ! alias dotfiles >/dev/null 2>&1; then
 fi
 
 echo "Checking git configs..."
-username=$(git config user.name)
+username=$(git config --global user.name)
 
-if [[ -e "$username"  ]]; then
-		  echo "Username:"
+if [[ -z "$username"  ]]; then
+		  echo "Username not found, please set your git username."
+		  echo "Enter your username:"
 		  read -r pr
 		  username=$pr
 		  git config --global user.name "$username"
