@@ -129,3 +129,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 source ~/scripts/.start_completion.sh 
+source /usr/share/bash-completion/completions/git
+__git_complete dotfiles __git_main
