@@ -2,19 +2,20 @@
 if ! alias dotfiles >/dev/null 2>&1; then
 	echo "alias dotfiles='git --git-dir=$HOME/dotfiles --work-tree=$HOME'" >> "$HOME/.bash_aliases"
 	source $HOME/.bash_aliases
-   echo "source /usr/share/bash-completion/completions/git" >> $HOME/.bashrc
-   echo "__git_complete dotfiles __git_main" >> $HOME/.bashrc
+	echo "source /usr/share/bash-completion/completions/git" >> $HOME/.bashrc
+	echo "__git_complete dotfiles __git_main" >> $HOME/.bashrc
+	source $HOME/.bashrc
 fi
 
 echo "Checking git configs..."
 username=$(git config --global user.name)
 
 if [[ -z "$username"  ]]; then
-		  echo "Username not found, please set your git username."
-		  echo "Enter your username:"
-		  read -r pr
-		  username=$pr
-		  git config --global user.name "$username"
+	echo "Username not found, please set your git username."
+	echo "Enter your username:"
+	read -r pr
+	username=$pr
+	git config --global user.name "$username"
 fi
 
 echo "Username set to $username"
@@ -37,12 +38,12 @@ push_updates(){
 track_filelist(){
    echo "tracking files..."
    while read -r line; do 
-		  if [[ -d $line ]]; then 
-					 cd $line && dotfiles add . && cd ..
-		  fi
+	if [[ -d $line ]]; then 
+			 cd $line && dotfiles add . && cd ..
+	fi
 
-		  echo "added $line"; 
-		  dotfiles add $line
+	echo "added $line"; 
+	dotfiles add $line
    done < "$HOME/.filelist"
 }
 
