@@ -1,1 +1,1 @@
-alias qwe='~/.start.sh'
+alias qwe='~/scripts/.start.sh'
