@@ -39,11 +39,11 @@ track_filelist(){
    echo "tracking files..."
    while read -r line; do 
 	if [[ -d $line ]]; then 
-			 cd $line && dotfiles add . && cd ..
+			 cd $line && dotfiles add . && cd "$HOME"
 	fi
 
-	echo "added $line"; 
 	dotfiles add $line
+	echo "added $line"; 
    done < "$HOME/.filelist"
 }
 
