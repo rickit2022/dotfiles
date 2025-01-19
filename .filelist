@@ -2,8 +2,10 @@
 .bashrc 
 .bash_aliases 
 scripts 
+.config/nvim
 .tmux.conf
 .gitconfig
 LICENSE
 .filelist
 fonts
+.vimrc
