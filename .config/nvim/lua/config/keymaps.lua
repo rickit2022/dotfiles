@@ -135,13 +135,13 @@ vim.keymap.set({'n','v'}, 'D', '"_D', { desc = 'Delete until end of line'})
 vim.keymap.set({'n','v'}, 'x', '"_x', { desc = 'Cut without yanking'})
 vim.keymap.set('n', 'dd', '"_dd', { desc = 'Delete line without yanking' })
 
-vim.keymap.set({'n','v'}, '<leader>d', '""d', { desc = 'Delete with yanking'})
+vim.keymap.set({'n','v'}, '<leader>d', 'd', { desc = 'Delete with yanking'})
 vim.keymap.set('n', '<leader>dd', 'dd', { desc = 'Delete line with yanking' })
 
 ----- 
 
 vim.keymap.set('n', 'ya', '0ggvG$y', { desc = 'Yank all' })
-vim.keymap.set('n', 'da', '0ggdG"_', { desc = 'Delete everything' })
+vim.keymap.set('n', 'da', '0ggdG', { desc = 'Delete everything' })
 vim.keymap.set({'n','v'}, 'DD', '"_D', { desc = 'Delete until end of line with yanking'})
 vim.keymap.set({'n','v'}, 'x', '"_x', { desc = 'Cut without yanking'})
 
