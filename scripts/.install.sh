@@ -5,6 +5,23 @@ full(){
 		  sudo apt update 
 		  sudo apt -y install vim neovim 
 
+		  # -------------- custom fonts install
+		  mkdir -p ~/.local/share/fonts
+		  cp ~/fonts ~/.local/share/fonts
+		  if ! fc-cache >/dev/null 2>&1; then sudo apt -y install fontconfig; fi
+		  fc-cache -f -v
+		  echo -e "Installed fonts:\n$(fc-list | grep .local/share/fonts)"
+
+		  # -------------- ssh setup
+
+   fi
+}
+
+compact(){
+		  apt -y install vim 
+}
+
+docker(){
 		  # -------------- docker install
 		  sudo apt-get -y purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
 
@@ -22,17 +39,9 @@ full(){
 		  sudo apt-get update
 
 		  sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+}
 
-		  # -------------- custom fonts install
-		  mkdir -p ~/.local/share/fonts
-		  cp ~/fonts ~/.local/share/fonts
-		  if ! fc-cache >/dev/null 2>&1; then sudo apt -y install fontconfig; fi
-		  fc-cache -f -v
-		  echo -e "Installed fonts:\n$(fc-list | grep .local/share/fonts)"
-
-
-		  # -------------- ssh setup
-
+nginx(){
 		  # -------------- nginx install from nginx repo
 		  sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
 		  curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
@@ -56,19 +65,18 @@ full(){
 					 | sudo tee /etc/apt/preferences.d/99nginx
 		  sudo apt update
 		  sudo apt install nginx
-   fi
 }
-
-compact(){
-		  apt -y install vim 
-}
-
-if [[ $# -eq 0 || ($# -eq 1 && ("$1" == "full" || "$1" == 'f')) ]]; then 
-		  full
-		  exit 0
-elif [[ $# -eq 1 && ("$1" == "compact" || "$1" == 'c') ]]; then 
-		  compact 
-		  exit 0
-else
-		  echo "Bad args: Failed to parse options"
-fi
+while [[ $# -gt 0 ]]; do
+		  case "$1" in 
+		  -d|--docker)
+					 docker shift ;;
+		  -ng|--nginx)
+					 nginx shift ;;
+		  -f|--full)
+					 full exit 0;;
+		  -c|--compact)
+					 compact exit 0;;
+		  *)
+					 echo "Invalid option: $1"
+		  esac
+done
