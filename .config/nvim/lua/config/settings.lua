@@ -1,4 +1,9 @@
-vim.opt.tabstop = 3
+vim.opt.smartindent = true
+vim.opt.autoindent = true
+vim.opt.tabstop = 3 --how many spaces == 1 tab
+vim.opt.shiftwidth = 3 --number of space used for autoindent
+--vim.opt.expandtab #use spaces instead of a tab
+
 vim.opt.list = true              -- Enable list mode (if you want it)
 vim.opt.timeoutlen = 300
 vim.opt.ttimeoutlen = 100 -- Timeout for key repeat (default: 100ms)
@@ -22,8 +27,9 @@ vim.api.nvim_create_autocmd("FileType", {
 
 --auto-update plugins 
 vim.api.nvim_create_autocmd("VimEnter", {
-		  callback=function() 
+		  callback=function()
 					 require"lazy".update({show = false,})
 		  end,
 })
+
 vim.opt.termguicolors = true
