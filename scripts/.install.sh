@@ -43,7 +43,7 @@ docker(){
 
 nginx(){
 		  # -------------- nginx install from nginx repo
-		  sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
+		  sudo apt -y install curl gnupg2 ca-certificates lsb-release ubuntu-keyring
 		  curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
 					 | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
 		  out=$(gpg --dry-run --quiet --no-keyring --import --import-options import-show /usr/share/keyrings/nginx-archive-keyring.gpg)
@@ -64,19 +64,41 @@ nginx(){
 		  echo -e "Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n" \
 					 | sudo tee /etc/apt/preferences.d/99nginx
 		  sudo apt update
-		  sudo apt install nginx
+		  sudo apt -y install nginx
 }
+nvim(){
+	sudo apt-get -y install ninja-build gettext cmake curl build-essential
+	git clone https://github.com/neovim/neovim
+	cd neovim 
+	git checkout stable # stable release
+	rm -r build/
+	sudo make CMAKE_BUILD_TYPE=RelWithDebInfo 
+	# build under $HOME/neovim
+	sudo make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/neovim"
+	sudo make install
+	echo "export PATH=$HOME/neovim/bin:$PATH" >> $HOME/.bashrc
+	. $HOME/.bashrc
+}
+
 while [[ $# -gt 0 ]]; do
 		  case "$1" in 
 		  -d|--docker)
-					 docker shift ;;
+				 docker 
+				 shift ;;
 		  -ng|--nginx)
-					 nginx shift ;;
+				 nginx 
+				 shift ;;
 		  -f|--full)
-					 full exit 0;;
-		  -c|--compact)
-					 compact exit 0;;
+				 full 
+				 exit 0;;
+	  -c|--compact)
+				 compact 
+				 exit 0;;
+			-nv|--nvim)
+				nvim
+				shift ;;
 		  *)
 					 echo "Invalid option: $1"
+					 exit 1;
 		  esac
 done
