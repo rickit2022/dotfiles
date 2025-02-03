@@ -116,7 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PATH=$PATH:/usr/lib/llvm-18/bin
 unset GTK_MODULES
 source ~/.bash_aliases
 
@@ -131,3 +130,4 @@ export NVM_DIR="$HOME/.nvm"
 source ~/scripts/.start_completion.sh 
 source /usr/share/bash-completion/completions/git
 __git_complete dotfiles __git_main
+echo "export PATH=$HOME/neovim/bin:$PATH" >> $HOME/.bashrc

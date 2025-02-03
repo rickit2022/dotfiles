@@ -1,24 +1,30 @@
 #!/bin/bash
 if ! alias dotfiles >/dev/null 2>&1; then
+	echo "Setting 'dotfiles' alias..."
 	echo "alias dotfiles='git --git-dir=$HOME/dotfiles --work-tree=$HOME'" >> "$HOME/.bash_aliases"
 	source $HOME/.bash_aliases
 	echo "source /usr/share/bash-completion/completions/git" >> $HOME/.bashrc
 	echo "__git_complete dotfiles __git_main" >> $HOME/.bashrc
 	source $HOME/.bashrc
+	dotfiles config --global core.editor "vim"
 fi
 
 echo "Checking git configs..."
 username=$(git config --global user.name)
 
 if [[ -z "$username"  ]]; then
-	echo "Username not found, please set your git username."
-	echo "Enter your username:"
+	echo "Username not found, would you like to set your configs? (y/n)"
 	read -r pr
-	username=$pr
-	git config --global user.name "$username"
+	if [[ $pr == 'y' ]];then
+		echo "Enter your username:"
+		read -r pr
+		username=$pr
+		git config --global user.name "$username"
+
+		echo "Username set to $username"
+	fi
 fi
 
-echo "Username set to $username"
 
 backup(){	
 	echo "backing up..."
@@ -80,6 +86,9 @@ while [ $# -gt 0 ]; do
 					 init
 					 shift
 					 ;;
+			--)
+					exit 0
+					;;
 		  *)
 					 echo "invalid args: $1"
 					 exit 1
