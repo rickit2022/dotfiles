@@ -104,9 +104,28 @@ vim.keymap.set('n', '<c-k>', '<c-w><c-k>', { desc = 'move focus to the upper win
 vim.keymap.set('v', '>>', '>gv', { desc = 'indent selected lines'})
 vim.keymap.set('v', '<<', '<gv', { desc = 'unindent selected lines'})
 
+vim.keymap.set('n', '<M-;>', function()
+  if vim.fn.winnr() == vim.fn.winnr('$') then
+    vim.cmd('vertical resize +5')
+  else
+    vim.cmd('vertical resize -5')
+  end
+end, {noremap=true, silent=true})
+
+vim.keymap.set('n', '<M-#>', function() 
+  if vim.fn.winnr() == vim.fn.winnr('$') then
+    vim.cmd('vertical resize -5')
+  else
+    vim.cmd('vertical resize +5')
+  end
+end, {noremap=true, silent=true})
+
+vim.keymap.set('n', "<M-'>", function() vim.cmd('resize +5') end, {noremap=true, silent=true})
+vim.keymap.set('n', "<M-[>", function() vim.cmd('resize -5') end, {noremap=true, silent=true})
+
 ------ Telescope builtin pickers
 vim.keymap.set('n', '<leader>ff', function()
-  require('telescope.builtin').find_files({ hidden = true })
+    require('telescope.builtin').find_files({ hidden = true })
 end, { desc = "Telescope find_files", noremap = true, silent = true})
 vim.keymap.set('n', '<leader>lg', function()
   require('telescope.builtin').live_grep()
@@ -146,15 +165,31 @@ vim.keymap.set({'n','v'}, 'DD', '"_D', { desc = 'Delete until end of line with y
 vim.keymap.set({'n','v'}, 'x', '"_x', { desc = 'Cut without yanking'})
 
 
+----- OTHER MOVEMENTS
+vim.keymap.set('n', '<C-d>', "15j", { desc = 'Skip 10 lines'})
+vim.keymap.set('n', '<C-u>', "15k", { desc = 'Skip 10 lines'})
+--vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>,', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'open diagnostics in float'}) 
+
 ------ netrw
 vim.keymap.set({'n','v'}, '<leader>e', ':Ex<cr>', { desc = 'Fast open netrw'})
-vim.keymap.set({'n','v'}, '<leader>r', function()
-	-- Automatically load session on startup if it exists
-	if vim.fn.filereadable(vim.fn.expand("~/.local/share/nvim/session.vim")) == 1 then
-	  vim.cmd("source ~/.local/share/nvim/session.vim")
+
+------ nvim sessions
+vim.keymap.set({'n'}, '<leader>s', function ()
+	if vim.fn.filereadable(vim.fn.expand("~/.tmp_session")) == 1 then
+    vim.cmd('mks! ~/.tmp_session') 
+  else
+    vim.cmd('touch ~/.tmp_session')
+    vim.cmd('mks! ~/.tmp_session') 
+  end
+end, { desc = 'force save the current session'})
+
+vim.keymap.set({'n'}, '<leader>r', function()
+	if vim.fn.filereadable(vim.fn.expand("~/.tmp_session")) == 1 then
+	  vim.cmd('source ~/.tmp_session')
 	end
 end,
-{ desc = 'Restore prev sess'})
+{ desc = 'Restore prev sess', noremap=true})
 --
 ---- [[ Install `lazy.nvim` plugin manager ]]
 ----    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
