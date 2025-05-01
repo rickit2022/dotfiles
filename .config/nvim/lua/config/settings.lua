@@ -33,3 +33,10 @@ vim.api.nvim_create_autocmd("VimEnter", {
 })
 
 vim.opt.termguicolors = true
+
+--auto-reload buffer if changed
+vim.opt.updatetime=60000 -- CursorHold-related, :help updatetime
+vim.api.nvim_create_autocmd({"FocusGained", "CursorHold", "BufEnter"}, {
+	pattern="*",
+	command="checktime",
+})
