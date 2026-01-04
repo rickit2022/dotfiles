@@ -120,73 +120,83 @@ unset GTK_MODULES
 source ~/.bash_aliases
 
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
+# # Load Angular CLI autocompletion.
+# source <(ng completion script)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source ~/scripts/.start_completion.sh 
-source /usr/share/bash-completion/completions/git
-__git_complete dotfiles __git_main
-#
-# Installation:
-#
-# Via shell config file  ~/.bashrc  (or ~/.zshrc)
-#
-#   Append the contents to config file
-#   'source' the file in the config file
-#
-# You may also have a directory on your system that is configured
-#    for completion files, such as:
-#
-#    /usr/local/etc/bash_completion.d/
+# source ~/scripts/.start_completion.sh 
+# source /usr/share/bash-completion/completions/git
+# __git_complete dotfiles __git_main
+# #
+# # Installation:
+# #
+# # Via shell config file  ~/.bashrc  (or ~/.zshrc)
+# #
+# #   Append the contents to config file
+# #   'source' the file in the config file
+# #
+# # You may also have a directory on your system that is configured
+# #    for completion files, such as:
+# #
+# #    /usr/local/etc/bash_completion.d/
 
-###-begin-flutter-completion-###
+# ###-begin-flutter-completion-###
 
-if type complete &>/dev/null; then
-  __flutter_completion() {
-    local si="$IFS"
-    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
-                           COMP_LINE="$COMP_LINE" \
-                           COMP_POINT="$COMP_POINT" \
-                           flutter completion -- "${COMP_WORDS[@]}" \
-                           2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  complete -F __flutter_completion flutter
-elif type compdef &>/dev/null; then
-  __flutter_completion() {
-    si=$IFS
-    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
-                 COMP_LINE=$BUFFER \
-                 COMP_POINT=0 \
-                 flutter completion -- "${words[@]}" \
-                 2>/dev/null)
-    IFS=$si
-  }
-  compdef __flutter_completion flutter
-elif type compctl &>/dev/null; then
-  __flutter_completion() {
-    local cword line point words si
-    read -Ac words
-    read -cn cword
-    let cword-=1
-    read -l line
-    read -ln point
-    si="$IFS"
-    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-                       COMP_LINE="$line" \
-                       COMP_POINT="$point" \
-                       flutter completion -- "${words[@]}" \
-                       2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  compctl -K __flutter_completion flutter
-fi
+# if type complete &>/dev/null; then
+#   __flutter_completion() {
+#     local si="$IFS"
+#     IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
+#                            COMP_LINE="$COMP_LINE" \
+#                            COMP_POINT="$COMP_POINT" \
+#                            flutter completion -- "${COMP_WORDS[@]}" \
+#                            2>/dev/null)) || return $?
+#     IFS="$si"
+#   }
+#   complete -F __flutter_completion flutter
+# elif type compdef &>/dev/null; then
+#   __flutter_completion() {
+#     si=$IFS
+#     compadd -- $(COMP_CWORD=$((CURRENT-1)) \
+#                  COMP_LINE=$BUFFER \
+#                  COMP_POINT=0 \
+#                  flutter completion -- "${words[@]}" \
+#                  2>/dev/null)
+#     IFS=$si
+#   }
+#   compdef __flutter_completion flutter
+# elif type compctl &>/dev/null; then
+#   __flutter_completion() {
+#     local cword line point words si
+#     read -Ac words
+#     read -cn cword
+#     let cword-=1
+#     read -l line
+#     read -ln point
+#     si="$IFS"
+#     IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+#                        COMP_LINE="$line" \
+#                        COMP_POINT="$point" \
+#                        flutter completion -- "${words[@]}" \
+#                        2>/dev/null)) || return $?
+#     IFS="$si"
+#   }
+#   compctl -K __flutter_completion flutter
+# fi
 
-###-end-flutter-completion-###
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
 
-## Generated 2025-02-04 09:56:54.315678Z
-## By ${HOME}/development/flutter/bin/cache/flutter_tools.snapshot
+alias studio="${HOME}/android-studio/bin/studio.sh"
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+export PATH=$PATH:/usr/local/go/bin
+eval "$(ssh-agent -s)"
+
