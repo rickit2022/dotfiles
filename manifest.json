@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "files": [
+    {
+      "home": ".bash_aliases",
+      "repo": "files/shared/.bash_aliases"
+    },
+    {
+      "home": ".bash_profile",
+      "repo": "files/shared/.bash_profile"
+    },
+    {
+      "home": ".bashrc",
+      "repo": "files/shared/.bashrc"
+    },
+    {
+      "home": ".config/shell/common.sh",
+      "repo": "files/shared/.config/shell/common.sh"
+    },
+    {
+      "home": ".config/shell/darwin.sh",
+      "repo": "files/shared/.config/shell/darwin.sh"
+    },
+    {
+      "home": ".config/shell/linux.sh",
+      "repo": "files/shared/.config/shell/linux.sh"
+    },
+    {
+      "home": ".gitconfig",
+      "repo": "files/shared/.gitconfig"
+    },
+    {
+      "home": ".profile",
+      "repo": "files/shared/.profile"
+    },
+    {
+      "home": ".zshrc",
+      "repo": "files/shared/.zshrc"
+    },
+    {
+      "home": ".config/nvim/init.lua",
+      "repo": "files/shared/.config/nvim/init.lua"
+    },
+    {
+      "home": ".config/nvim/lua/config/keymaps.lua",
+      "repo": "files/shared/.config/nvim/lua/config/keymaps.lua"
+    },
+    {
+      "home": ".config/nvim/lua/config/lazy.lua",
+      "repo": "files/shared/.config/nvim/lua/config/lazy.lua"
+    },
+    {
+      "home": ".config/nvim/lua/config/settings.lua",
+      "repo": "files/shared/.config/nvim/lua/config/settings.lua"
+    },
+    {
+      "home": ".config/nvim/lua/plugins/catpuccin_theme.lua",
+      "repo": "files/shared/.config/nvim/lua/plugins/catpuccin_theme.lua"
+    },
+    {
+      "home": ".config/nvim/lua/plugins/cmp.lua",
+      "repo": "files/shared/.config/nvim/lua/plugins/cmp.lua"
+    },
+    {
+      "home": ".config/nvim/lua/plugins/formatting.lua",
+      "repo": "files/shared/.config/nvim/lua/plugins/formatting.lua"
+    },
+    {
+      "home": ".config/nvim/lua/plugins/linting.lua",
+      "repo": "files/shared/.config/nvim/lua/plugins/linting.lua"
+    },
+    {
+      "home": ".config/nvim/lua/plugins/lsp.lua",
+      "repo": "files/shared/.config/nvim/lua/plugins/lsp.lua"
+    },
+    {
+      "home": ".config/nvim/lua/plugins/telescope.lua",
+      "repo": "files/shared/.config/nvim/lua/plugins/telescope.lua"
+    },
+    {
+      "home": ".config/nvim/lua/plugins/treesitter.lua",
+      "repo": "files/shared/.config/nvim/lua/plugins/treesitter.lua"
+    },
+    {
+      "home": ".config/nvim/lazy-lock.json",
+      "repo": "files/shared/.config/nvim/lazy-lock.json"
+    },
+    {
+      "home": ".tmux.conf",
+      "repo": "files/shared/.tmux.conf"
+    },
+    {
+      "home": "scripts/.start.sh",
+      "repo": "files/linux/scripts/.start.sh",
+      "platforms": [
+        "linux"
+      ]
+    }
+  ]
+}

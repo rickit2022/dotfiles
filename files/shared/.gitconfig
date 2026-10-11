@@ -1,7 +1,10 @@
 [user]
 	name = rickit2022
-	email = #yourgitemail
 [init]
 	defaultBranch = main
 [core]
 	editor = nvim
+[push]
+	autoSetupRemote = true
+[include]
+	path = ~/.gitconfig.local
