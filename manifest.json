@@ -18,6 +18,14 @@
       "repo": "files/shared/.config/shell/common.sh"
     },
     {
+      "home": ".config/shell/completions.bash",
+      "repo": "files/shared/.config/shell/completions.bash"
+    },
+    {
+      "home": ".config/shell/completions.zsh",
+      "repo": "files/shared/.config/shell/completions.zsh"
+    },
+    {
       "home": ".config/shell/darwin.sh",
       "repo": "files/shared/.config/shell/darwin.sh"
     },

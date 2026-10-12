@@ -9,5 +9,6 @@ DOTFILES_SHELL=zsh
 [[ -r "$HOME/.config/shell/common.sh" ]] && . "$HOME/.config/shell/common.sh"
 autoload -Uz compinit
 compinit
+[[ -r "$HOME/.config/shell/completions.zsh" ]] && . "$HOME/.config/shell/completions.zsh"
 [[ -r "$HOME/.zshrc.local" ]] && . "$HOME/.zshrc.local"
 :

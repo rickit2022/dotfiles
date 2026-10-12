@@ -15,6 +15,7 @@ fi
 if [ -r "${NVM_DIR:-$HOME/.nvm}/bash_completion" ]; then
     . "${NVM_DIR:-$HOME/.nvm}/bash_completion"
 fi
+[ -r "$HOME/.config/shell/completions.bash" ] && . "$HOME/.config/shell/completions.bash"
 _avd_complete() {
     local emulator_bin
     emulator_bin=$(_dotfiles_emulator) || return
