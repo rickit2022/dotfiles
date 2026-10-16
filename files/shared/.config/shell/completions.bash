@@ -13,7 +13,7 @@ _dotfiles_cli_complete() {
             global='--home'
             ;;
         recovery)
-            commands='on off attach list accounts status run check'
+            commands='on off pause attach list accounts model settings status run check'
             global='--config'
             ;;
     esac
@@ -49,6 +49,11 @@ _dotfiles_cli_complete() {
     if [ "$kind" = dotfiles ] && [ "$command" = sync ]; then
         case "$prev" in -m|--message) return 0 ;; esac
     fi
+    if [ "$kind" = recovery ] && [ "$command" = model ]; then
+        # Supported levels depend on the chosen model; do not invent values
+        # or start Codex to discover them during shell completion.
+        case "$prev" in --effort) return 0 ;; esac
+    fi
 
     options='-h --help'
     if [ -z "$command" ]; then
@@ -59,7 +64,8 @@ _dotfiles_cli_complete() {
             dotfiles:sync) options="$options --dry-run -m --message" ;;
             recovery:run) options="$options --dry-run --json" ;;
             recovery:status) options="$options --json" ;;
-            dotfiles:status|dotfiles:audit|recovery:on|recovery:off|recovery:attach|recovery:list|recovery:accounts) ;;
+            recovery:model) options="$options --effort --follow --list --json" ;;
+            dotfiles:status|dotfiles:audit|recovery:on|recovery:off|recovery:pause|recovery:attach|recovery:list|recovery:accounts|recovery:settings) ;;
             *) return 0 ;;
         esac
     fi

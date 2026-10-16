@@ -46,7 +46,7 @@ class CompletionTests(unittest.TestCase):
                 self.assertEqual(set(self.bash_complete(name, '')),
                                  {'status', 'capture', 'apply', 'audit', 'sync', '--home', '-h', '--help'})
         self.assertEqual(set(self.bash_complete('codex-recovery', '')),
-                         {'on', 'off', 'attach', 'list', 'accounts', 'status', 'run', 'check', '--config', '-h', '--help'})
+                         {'on', 'off', 'pause', 'attach', 'list', 'accounts', 'model', 'settings', 'status', 'run', 'check', '--config', '-h', '--help'})
 
     def test_bash_context_flags_with_global_option_values(self):
         cases = [
@@ -56,6 +56,13 @@ class CompletionTests(unittest.TestCase):
             (('codex-recovery', 'run', '--'), ['--help', '--dry-run', '--json']),
             (('codex-recovery', 'check', '--j'), []),
             (('codex-recovery', 'status', '--j'), ['--json']),
+            (('codex-recovery', 'pause', '--f'), []),
+            (('codex-recovery', 'pause', '--'), ['--help']),
+            (('codex-recovery', 'model', '--e'), ['--effort']),
+            (('codex-recovery', 'model', '--f'), ['--follow']),
+            (('codex-recovery', 'model', '--l'), ['--list']),
+            (('codex-recovery', 'model', '--effort', ''), []),
+            (('codex-recovery', 'settings', '--'), ['--help']),
             (('dotfiles-sync', '--home', 'sync', 'capture', '--d'), ['--dry-run']),
             (('codex-recovery', '--config', 'status', 'run', '--j'), ['--json']),
             (('dotfiles-sync', '--home=sync', 'capture', '--d'), ['--dry-run']),
@@ -127,7 +134,13 @@ class CompletionTests(unittest.TestCase):
             ('dotfiles-sync ca', 'dotfiles-sync capture '),
             ('dotfiles sy', 'dotfiles sync '),
             ('codex-recovery ac', 'codex-recovery accounts '),
+            ('codex-recovery mo', 'codex-recovery model '),
+            ('codex-recovery se', 'codex-recovery settings '),
+            ('codex-recovery model --e', 'codex-recovery model --effort '),
+            ('codex-recovery model --f', 'codex-recovery model --follow '),
             ('codex-recovery run --j', 'codex-recovery run --json '),
+            ('codex-recovery pa', 'codex-recovery pause '),
+            ('codex-recovery pause --h', 'codex-recovery pause --help '),
             ('dotfiles-sync --home sync capture --d', 'dotfiles-sync --home sync capture --dry-run '),
             ('codex-recovery --config status run --j', 'codex-recovery --config status run --json '),
             ('dotfiles-sync --home '+str(self.home/'spa'), 'dotfiles-sync --home '+str(directory).replace(' ', '\\ ')+'/'),

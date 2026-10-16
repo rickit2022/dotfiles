@@ -3,7 +3,7 @@
 [init]
 	defaultBranch = main
 [core]
-	editor = nvim
+	editor = vim
 [push]
 	autoSetupRemote = true
 [include]

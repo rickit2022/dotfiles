@@ -8,7 +8,6 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
-import socket
 import subprocess
 import sys
 import tempfile
@@ -40,6 +39,7 @@ def safe_relative(value):
     if (parts & PRIVATE_PARTS or name == '.env' or name.startswith('.env.')
             or name.endswith(('.local', '.pem', '.key', '.p12', '.pfx', '.kdbx'))
             or name in {'auth.json', 'hosts.yml', '.netrc', '.npmrc', '.pypirc', '.git-credentials', 'local.sh'}
+            or name in {'.netrwhist', '.viminfo'} or 'shada' in parts
             or any(part.endswith('_history') or part in {'history', '.bash_history', '.zsh_history'} for part in parts)):
         raise RuntimeError('Manifest cannot sync private credential, Git, history or local override paths')
     return path
@@ -80,6 +80,10 @@ def check_text(data, label):
             suspicious = True
     if suspicious:
         raise RuntimeError('Possible credential in ' + str(label) + '; move it to an ignored local file')
+    if re.search(r'/(?:home|Users)/(?!USER(?:NAME)?(?:/|\b))[^\s/"\'<>:]+', text):
+        raise RuntimeError('Private home path in ' + str(label) + '; use $HOME, ~ or a local override')
+    if Path(str(label).split(' in unpublished ', 1)[0]).name == '.gitconfig' and re.search(r'(?im)^\s*email\s*=', text):
+        raise RuntimeError('Git email identity in ' + str(label) + '; keep it in ~/.gitconfig.local')
 
 
 def write_file(path, data, mode):
@@ -239,7 +243,7 @@ class Dotfiles:
         if existing:
             self.git('add', '--', *existing)
         if self.git('diff', '--cached', '--name-only'):
-            self.git('commit', '-m', message or ('Sync configs from ' + socket.gethostname()))
+            self.git('commit', '-m', message or 'Sync configs')
         self.audit_outgoing()
         self.git('push', 'origin', 'HEAD:main')
         print('Synced selected configs to origin/main.')

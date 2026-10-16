@@ -41,9 +41,12 @@ _codex_recovery() {
     commands=(
         'on:Enable automatic recovery and select a conversation'
         'off:Disable automatic recovery'
+        'pause:Pause the selected goal until run'
         'attach:Attach to the recovery conversation in tmux'
         'list:List conversations with goals'
         'accounts:Choose accounts for rotation'
+        'model:Choose a recovery model and reasoning effort'
+        'settings:Open account and model settings'
         'status:Show recovery status'
         'run:Resume the selected goal now'
         'check:Run an automatic recovery check'
@@ -74,7 +77,14 @@ _codex_recovery() {
                     _arguments '(-h --help)'{-h,--help}'[Show help]' \
                         '1:conversation ID:'
                     ;;
-                off|attach|list|accounts) _arguments '(-h --help)'{-h,--help}'[Show help]' ;;
+                model)
+                    _arguments '(-h --help)'{-h,--help}'[Show help]' \
+                        '--effort[Set reasoning effort supported by the model]:reasoning effort:' \
+                        '--follow[Follow the conversation model and reasoning setting]' \
+                        '--list[List models and supported reasoning efforts]' \
+                        '--json[Print JSON model list; requires --list]'
+                    ;;
+                off|pause|attach|list|accounts|settings) _arguments '(-h --help)'{-h,--help}'[Show help]' ;;
             esac
             ;;
     esac

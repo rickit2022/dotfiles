@@ -72,6 +72,37 @@ class SyncTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'credential'):
             self.module.check_text(b'export PASSWORD="a password with spaces"\n', 'literal')
 
+    def test_private_home_paths_abort_capture_without_printing_the_value(self):
+        for prefix in ('/home/', '/Users/'):
+            value = prefix+'private-host-person/projects/tool'
+            (self.home/'.bashrc').write_text('alias tool="'+value+'"\n')
+            with self.assertRaisesRegex(RuntimeError, 'home path|host') as error:
+                self.sync.capture()
+            self.assertNotIn(value, str(error.exception))
+            self.assertFalse((self.repo/'files/shared/.bashrc').exists())
+        for content in (b'alias tool="$HOME/projects/tool"\n', b'Path.home()\n', b'/usr/bin/python3\n'):
+            self.module.check_text(content, 'portable config')
+
+    def test_git_email_identity_must_be_in_an_ignored_local_override(self):
+        value = b'[user]\n email = personal' + b'@mail.invalid\n'
+        with self.assertRaisesRegex(RuntimeError, 'identity|email') as error:
+            self.module.check_text(value, 'files/shared/.gitconfig')
+        self.assertNotIn('personal', str(error.exception))
+
+    def test_editor_histories_are_not_publishable(self):
+        for name in ('.vim/.netrwhist', '.viminfo', '.local/share/nvim/shada/main.shada'):
+            with self.subTest(path=name), self.assertRaisesRegex(RuntimeError, 'history|private'):
+                self.module.safe_relative(name)
+
+    def test_default_sync_commit_message_does_not_include_hostname(self):
+        remote = self.repo.parent/'remote.git'
+        git(self.repo.parent, 'init', '--bare', str(remote))
+        git(self.repo, 'remote', 'add', 'origin', str(remote))
+        git(self.repo, 'push', '-u', 'origin', 'main')
+        (self.home/'.bashrc').write_text('alias ll="ls -l"\n')
+        self.sync.sync()
+        self.assertEqual(git(self.repo, 'log', '-1', '--format=%s'), 'Sync configs')
+
     def test_shell_terminators_do_not_hide_credential_assignments(self):
         for assignment in [b'export API_TOKEN="fixture_private_literal";',
                            b"TOKEN='fixture_private_literal'; echo done", b'PASSWORD=private_value;',

@@ -30,3 +30,7 @@ credentials*
 *_history
 .zsh_history
 .bash_history
+.netrwhist
+.viminfo
+*.shada
+*.shada.tmp.*
